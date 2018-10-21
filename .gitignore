@@ -71,3 +71,6 @@ __pycache__
 
 # Base de datos de sqlite
 #launch.db
+
+# Local python interpreter
+venv/
