@@ -39,13 +39,14 @@ import {
     MatTooltipModule,
     MatTreeModule,
 } from '@angular/material';
+import {HttpClientModule} from '@angular/common/http';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MapComponent} from './map/map.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {MaindrawerComponent} from './maindrawer/maindrawer.component';
-
-import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -94,7 +95,8 @@ import {HttpClientModule} from '@angular/common/http';
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        LeafletModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]
