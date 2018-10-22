@@ -10,11 +10,11 @@ export class SharedDataService {
     private onSelectedLaunchChangeFunction: (Number) => void;
 
     // Esta promise obtiene los datos de lanzamiento de cohetes
-    private gettingLaunchesData: Promise = new Promise<Array<RocketLaunchInfo>>((resolve, reject) => {
+    private gettingLaunchesData: Promise<Array<RocketLaunchInfo>> = new Promise<Array<RocketLaunchInfo>>((resolve, reject) => {
         const jsonURL = 'http://127.0.0.1:5000/launcher';
         this.http.get<Array<RocketLaunchJSON>>(jsonURL).toPromise().catch(reason => {
             reject(reason);
-        }).then((content: Object) => {
+        }).then((content: any) => {
             const dataArray: Array<RocketLaunchJSON> = content.items;
             const toReturn = dataArray.map(actual =>
                 new RocketLaunchInfo(actual.id, new Date(), actual.name,
