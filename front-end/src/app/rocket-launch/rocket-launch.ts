@@ -1,13 +1,13 @@
 export class RocketLaunchInfo {
-    public id: Number;
+    public id: number;
     public date: Date;
-    public name: String;
-    public rocket: String;
-    public url: String;
-    public location: String;
-    public coordinates: [Number, Number];
+    public name: string;
+    public rocket: string;
+    public url: string;
+    public location: string;
+    public coordinates: [number, number];
 
-    constructor(id: Number, date: Date, name: String, rocket: String, url: String, location: String, coordinates: [Number, Number]) {
+    constructor(id: number, date: Date, name: string, rocket: string, url: string, location: string, coordinates: [number, number]) {
         this.id = id;
         this.date = date;
         this.name = name;
@@ -19,11 +19,11 @@ export class RocketLaunchInfo {
 }
 
 export class RocketLaunchJSON {
-    public id: Number;
-    public date: String;
-    public name: String;
-    public rocket: String;
-    public url: String;
-    public location: String;
-    public coordinates: [Number, Number];
+    public id: number;
+    public date: string;
+    public name: string;
+    public rocket: string;
+    public url: string;
+    public location: string;
+    public coordinates: [number, number];
 }
