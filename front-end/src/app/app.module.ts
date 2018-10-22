@@ -46,14 +46,16 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MapComponent} from './map/map.component';
 import {NavbarComponent} from './navbar/navbar.component';
-import {MaindrawerComponent} from './maindrawer/maindrawer.component';
+import {MainDrawerComponent} from './maindrawer/main-drawer.component';
+import { LateralDrawerComponent } from './lateral-drawer/lateral-drawer.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         MapComponent,
         NavbarComponent,
-        MaindrawerComponent
+        MainDrawerComponent,
+        LateralDrawerComponent
     ],
     imports: [
         CommonModule,

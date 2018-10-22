@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SharedDataService} from '../shared-data.service';
-import {MatPaginator, MatTableDataSource, MatTable} from '@angular/material';
+import {MatPaginator, MatTable, MatTableDataSource} from '@angular/material';
 import {RocketLaunchInfo} from '../rocket-launch/rocket-launch';
 
 @Component({
-    selector: 'app-maindrawer',
-    templateUrl: './maindrawer.component.html',
-    styleUrls: ['./maindrawer.component.css']
+  selector: 'app-lateral-drawer',
+  templateUrl: './lateral-drawer.component.html',
+  styleUrls: ['./lateral-drawer.component.css']
 })
-export class MaindrawerComponent implements OnInit {
+export class LateralDrawerComponent implements OnInit {
 
     public displayedColumns: string[] = ['name', 'location', 'date', 'hour', 'view'];
 
@@ -25,5 +25,4 @@ export class MaindrawerComponent implements OnInit {
         });
         this.matdatasource.paginator = this.myPaginator;
     }
-
 }
