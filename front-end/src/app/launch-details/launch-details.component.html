@@ -1,0 +1,39 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <mat-icon svgIcon="go-back"></mat-icon>
+        <span>{{selectedLaunch.name}}</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card class="launch-data-container">
+    <!-- TODO: Colocar imagen real del cohete o de la marca -->
+    <img mat-card-image
+         src="https://www.spacex.com/sites/spacex/files/styles/new_gallery_large/public/first_reflight_-_11_ses10_l-0_-_landing_cam02_-_040117_-_img_968528.jpg?itok=kPQmUP-i"
+         alt="{{selectedLaunch.name}}">
+    <mat-card-content>
+        <table class="mat-elevation-z8 launch-data-info">
+            <tr>
+                <td><b>Fecha</b></td>
+                <td>{{selectedLaunch.date.toLocaleDateString()}}</td>
+            </tr>
+            <tr>
+                <td><b>Hora</b></td>
+                <td>{{selectedLaunch.date.toLocaleTimeString()}}</td>
+            </tr>
+            <tr>
+                <td><b>Modelo del cohete</b></td>
+                <td>{{selectedLaunch.rocket}}</td>
+            </tr>
+            <tr>
+                <td><b>Localización</b></td>
+                <td>{{selectedLaunch.location}}</td>
+            </tr>
+        </table>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button>IR A LA WEB</button>
+    </mat-card-actions>
+</mat-card>
+
+
+

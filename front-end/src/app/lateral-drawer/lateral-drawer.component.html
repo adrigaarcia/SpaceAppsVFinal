@@ -1,35 +1,30 @@
-<h2> Proximos lanzamientos</h2>
-<table mat-table #myMatTable [dataSource]="matdatasource" class="mat-elevation-z8 launch-data-container">
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>Próximos lanzamientos</span>
+    </mat-toolbar-row>
+</mat-toolbar>
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Nombre</th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
+<table cdk-table [dataSource]="matdatasource">
+    <ng-container cdkColumnDef="dataColumn">
+        <th cdk-header-cell *cdkHeaderCellDef></th>
+        <td cdk-cell *cdkCellDef="let element">
+            <mat-card class="launch-data-container">
+                <mat-card-header>
+                    <mat-card-title>{{element.name}}</mat-card-title>
+                    <mat-card-subtitle>{{element.location}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{element.date.toLocaleDateString()}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions>
+                    <button mat-button (click)="dataSource.changeSelectedLaunch(element.id)">MÁS DETALLES</button>
+                </mat-card-actions>
+            </mat-card>
+        </td>
+    </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="location">
-    <th mat-header-cell *matHeaderCellDef> Localización </th>
-    <td mat-cell *matCellDef="let element"> {{element.location}} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef> Fecha </th>
-    <td mat-cell *matCellDef="let element"> {{element.date.toLocaleDateString()}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="hour">
-    <th mat-header-cell *matHeaderCellDef> Hora </th>
-    <td mat-cell *matCellDef="let element"> {{element.date.toLocaleTimeString()}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="view">
-    <th mat-header-cell *matHeaderCellDef> Acceder </th>
-    <td mat-cell *matCellDef="let element"> <button mat-button (click)="dataSource.changeSelectedLaunch(element.id)">VER</button> </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr cdk-header-row *cdkHeaderRowDef="['dataColumn']"></tr>
+    <tr cdk-row *cdkRowDef="let row; columns: ['dataColumn'];"></tr>
 </table>
-<mat-paginator #myMatPaginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+
+<mat-paginator #myMatPaginator [pageSizeOptions]="[4, 5, 10]" showFirstLastButtons></mat-paginator>
+
+

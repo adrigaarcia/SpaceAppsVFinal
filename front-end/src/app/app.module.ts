@@ -40,14 +40,16 @@ import {
     MatTreeModule,
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {CdkTableModule} from '@angular/cdk/table';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MapComponent} from './map/map.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {MainDrawerComponent} from './maindrawer/main-drawer.component';
-import { LateralDrawerComponent } from './lateral-drawer/lateral-drawer.component';
+import {LateralDrawerComponent} from './lateral-drawer/lateral-drawer.component';
+import { LaunchDetailsComponent } from './launch-details/launch-details.component';
 
 @NgModule({
     declarations: [
@@ -55,9 +57,11 @@ import { LateralDrawerComponent } from './lateral-drawer/lateral-drawer.componen
         MapComponent,
         NavbarComponent,
         MainDrawerComponent,
-        LateralDrawerComponent
+        LateralDrawerComponent,
+        LaunchDetailsComponent
     ],
     imports: [
+        CdkTableModule,
         CommonModule,
         BrowserModule,
         HttpClientModule,

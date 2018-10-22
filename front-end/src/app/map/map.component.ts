@@ -35,10 +35,9 @@ export class MapComponent implements OnInit {
             position,
             {
                 icon: icon({
-                    iconSize: [25, 41],
+                    iconSize: [41, 44],
                     iconAnchor: [13, 41],
-                    iconUrl: 'assets/marker-icon.png',
-                    shadowUrl: 'assets/marker-shadow.png'
+                    iconUrl: 'assets/rocket-launch.png'
                 }),
                 title: title
             }
