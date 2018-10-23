@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SharedDataService} from '../shared-data.service';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {RocketLaunchDataService} from '../rocket-launch-data.service';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {RocketLaunchInfo} from '../rocket-launch/rocket-launch';
 
@@ -9,16 +9,19 @@ import {RocketLaunchInfo} from '../rocket-launch/rocket-launch';
     styleUrls: ['./lateral-drawer.component.css']
 })
 export class LateralDrawerComponent implements OnInit {
-    constructor(public dataSource: SharedDataService) {
+
+
+    @ViewChild('paginator') paginator: MatPaginator;
+    public rocketLaunchDataSource = new MatTableDataSource([]);
+
+    @Output() selectedLaunchIdEventEmitter = new EventEmitter<number>();
+
+    constructor(public dataSource: RocketLaunchDataService) {
     }
-
-    @ViewChild('myMatPaginator') myPaginator: MatPaginator;
-    public matdatasource = new MatTableDataSource([]);
-
     ngOnInit() {
-        this.dataSource.getData(1).then((data: Array<RocketLaunchInfo>) => {
-            this.matdatasource.data = data;
+        this.dataSource.getAllData().then((data: Array<RocketLaunchInfo>) => {
+            this.rocketLaunchDataSource.data = data;
         });
-        this.matdatasource.paginator = this.myPaginator;
+        this.rocketLaunchDataSource.paginator = this.paginator;
     }
 }

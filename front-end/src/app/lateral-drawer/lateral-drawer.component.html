@@ -4,7 +4,7 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<table cdk-table [dataSource]="matdatasource">
+<table cdk-table [dataSource]="rocketLaunchDataSource">
     <ng-container cdkColumnDef="dataColumn">
         <th cdk-header-cell *cdkHeaderCellDef></th>
         <td cdk-cell *cdkCellDef="let element">
@@ -15,7 +15,7 @@
                     <mat-card-subtitle>{{element.date.toLocaleDateString()}}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-actions>
-                    <button mat-button (click)="dataSource.changeSelectedLaunch(element.id)">MÁS DETALLES</button>
+                    <button mat-button (click)="selectedLaunchIdEventEmitter.emit(element.id)">MÁS DETALLES</button>
                 </mat-card-actions>
             </mat-card>
         </td>
@@ -25,6 +25,6 @@
     <tr cdk-row *cdkRowDef="let row; columns: ['dataColumn'];"></tr>
 </table>
 
-<mat-paginator #myMatPaginator [pageSizeOptions]="[4, 5, 10]" showFirstLastButtons></mat-paginator>
+<mat-paginator #paginator [pageSizeOptions]="[4, 5, 10]" showFirstLastButtons></mat-paginator>
 
 

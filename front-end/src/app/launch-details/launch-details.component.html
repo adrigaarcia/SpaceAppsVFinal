@@ -1,6 +1,8 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <mat-icon svgIcon="go-back"></mat-icon>
+        <button mat-icon-button (click)="backPulsed.emit(true)">
+            <mat-icon svgIcon="go-back"></mat-icon>
+        </button>
         <span>{{selectedLaunch.name}}</span>
     </mat-toolbar-row>
 </mat-toolbar>
