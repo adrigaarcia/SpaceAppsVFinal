@@ -31,3 +31,8 @@ Una vez están instaladas las dependencias, ya se puede lanzar el servidor:
 $ cd front-end
 $ ng serve
 ```
+
+## Screenshots
+Página principal |  Detalles de lanzamiento
+:---------------:|:-----------------------:
+![Página principal](screenshots/next-launches.png) |  ![Detalles de lanzamiento](screenshots/launch-detail.png) |
