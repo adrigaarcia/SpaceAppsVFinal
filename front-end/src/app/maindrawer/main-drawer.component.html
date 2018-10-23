@@ -1,0 +1,19 @@
+<mat-drawer-container fullscreen>
+    <mat-drawer mode="side" opened>
+
+        <ng-template [ngIf]="showDetails" [ngIfElse]="noShowDetails">
+            <app-launch-details [selectedLaunchID]="selectedLaunchId"
+                                (backPulsed)="showDetails = false"></app-launch-details>
+        </ng-template>
+
+        <ng-template #noShowDetails>
+            <app-lateral-drawer (selectedLaunchIdEventEmitter)="onLaunchSelected($event)"></app-lateral-drawer>
+        </ng-template>
+
+    </mat-drawer>
+
+    <mat-drawer-content>
+        <app-map [selectedLaunchID]="selectedLaunchId"></app-map>
+    </mat-drawer-content>
+
+</mat-drawer-container>

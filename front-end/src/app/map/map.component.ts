@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {SharedDataService} from '../shared-data.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {RocketLaunchDataService} from '../rocket-launch-data.service';
 import {RocketLaunchInfo} from '../rocket-launch/rocket-launch';
 import {icon, latLng, marker, tileLayer, Layer, LatLng} from 'leaflet';
 
@@ -28,17 +28,21 @@ export class MapComponent implements OnInit {
         center: latLng([46.8523, -121.7603])
     };
 
-    public launchRocketsData: Array<RocketLaunchInfo> = [];
+    @Input()
+    set selectedLaunchID(id: number) {
+        this.dataSource.getLaunchDataById(id).then((value: RocketLaunchInfo)  => {
+            this.center = latLng(value.coordinates);
+        });
+    }
 
     private addMarker(title: string, position: [number, number]) {
         const newMarker = marker(
             position,
             {
                 icon: icon({
-                    iconSize: [25, 41],
+                    iconSize: [41, 44],
                     iconAnchor: [13, 41],
-                    iconUrl: 'assets/marker-icon.png',
-                    shadowUrl: 'assets/marker-shadow.png'
+                    iconUrl: 'assets/rocket-launch.png'
                 }),
                 title: title
             }
@@ -47,22 +51,14 @@ export class MapComponent implements OnInit {
         this.markers.push(newMarker);
     }
 
-    constructor(private dataSource: SharedDataService) {
+    constructor(private dataSource: RocketLaunchDataService) {
     }
 
     ngOnInit() {
-        // Obtiene la información sobre lanzamientos
-        this.dataSource.getData(1).then((data: Array<RocketLaunchInfo>) => {
-            this.launchRocketsData = data;
-            const nextLaunch: RocketLaunchInfo = data[0];
-            this.center = latLng(nextLaunch.coordinates);
+        // Obtiene la información sobre lanzamientos y la coloca sobre el mapa
+        this.dataSource.getAllData().then((data: Array<RocketLaunchInfo>) => {
+            this.center = latLng(data[0].coordinates);
             data.forEach((element: RocketLaunchInfo) => this.addMarker(element.name, element.coordinates));
-        });
-
-
-        this.dataSource.onSelectedLaunchChangeListener((id: Number) => {
-            const selected = this.launchRocketsData.find((element: RocketLaunchInfo) => element.id === id);
-            this.center = latLng(selected.coordinates);
         });
     }
 }

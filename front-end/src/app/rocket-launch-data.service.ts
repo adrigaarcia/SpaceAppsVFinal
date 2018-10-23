@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable({
     providedIn: 'root'
 })
-export class SharedDataService {
+export class RocketLaunchDataService {
 
     private onSelectedLaunchChangeFunction: (Number) => void;
 
@@ -33,8 +33,17 @@ export class SharedDataService {
     }
 
 
-    public getData(type: Number): Promise<Array<RocketLaunchInfo>> {
+    public getAllData(): Promise<Array<RocketLaunchInfo>> {
         return this.gettingLaunchesData;
+    }
+
+    public getLaunchDataById(id: number): Promise<RocketLaunchInfo> {
+        return new Promise<RocketLaunchInfo>((resolve, reject) => {
+            this.gettingLaunchesData.then((data: Array<RocketLaunchInfo>) => {
+                const searched = data.find((element: RocketLaunchInfo) => element.id === id);
+                resolve(searched);
+            }).catch(reason => reject(reason));
+        });
     }
 
     constructor(private http: HttpClient) {
