@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {SharedDataService} from '../shared-data.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {RocketLaunchDataService} from '../rocket-launch-data.service';
 import {RocketLaunchInfo} from '../rocket-launch/rocket-launch';
-// Leflet variable
-declare let L;
+import {icon, latLng, marker, tileLayer, Layer, LatLng} from 'leaflet';
 
 @Component({
     selector: 'app-map',
@@ -11,51 +10,55 @@ declare let L;
 })
 export class MapComponent implements OnInit {
 
-    public launchRocketsData: Array<RocketLaunchInfo> = [];
+    // Base layer (MAP)
+    public baseLayer = tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 
-    constructor(private dataSource: SharedDataService) {
+    // Different launch markers
+    public markers: Layer[] = [];
+
+    // Center in the map
+    public center: LatLng = latLng([46.8523, -121.7603]);
+
+    // Initial options configuration
+    public options = {
+        layers: [
+            this.baseLayer
+        ],
+        zoom: 10,
+        center: latLng([46.8523, -121.7603])
+    };
+
+    @Input()
+    set selectedLaunchID(id: number) {
+        this.dataSource.getLaunchDataById(id).then((value: RocketLaunchInfo)  => {
+            this.center = latLng(value.coordinates);
+        });
+    }
+
+    private addMarker(title: string, position: [number, number]) {
+        const newMarker = marker(
+            position,
+            {
+                icon: icon({
+                    iconSize: [41, 44],
+                    iconAnchor: [13, 41],
+                    iconUrl: 'assets/rocket-launch.png'
+                }),
+                title: title
+            }
+        );
+
+        this.markers.push(newMarker);
+    }
+
+    constructor(private dataSource: RocketLaunchDataService) {
     }
 
     ngOnInit() {
-        // Initial configuration of Map
-        const mymap = L.map('mapid').setView([0, 0], 13);
-
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?' +
-            'access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            maxZoom: 18,
-            id: 'mapbox.streets'
-        }).addTo(mymap);
-
-        // Obtiene periodicamente la información
-        this.dataSource.getData(1).then((data: Array<RocketLaunchInfo>) => {
-            this.launchRocketsData = data;
-            const nextLaunch: RocketLaunchInfo = data[0];
-            mymap.setView(nextLaunch.coordinates, 13);
-            data.forEach((element) => {
-                let texto = '<b>' + element.name + '</b><br />'
-                    + element.id + '</b><br />'
-                    + 'Hora: ' + element.date.toLocaleTimeString() + '<br />'
-                    + 'Fecha: ' + element.date.toLocaleDateString() + '<br />'
-                    + 'Cohete: ' + element.rocket;
-
-                if (element.url != null) {
-                    texto = texto + '<br />'
-                        + 'Url: ' + element.url;
-                }
-                L.marker(element.coordinates).addTo(mymap)
-                    .bindPopup(texto);
-
-            });
-        });
-
-
-        this.dataSource.onSelectedLaunchChangeListener((id: Number) => {
-            console.log(id);
-            const selected = this.launchRocketsData.find((element: RocketLaunchInfo) => {
-                return element.id === id;
-            });
-
-            mymap.setView(selected.coordinates, 13);
+        // Obtiene la información sobre lanzamientos y la coloca sobre el mapa
+        this.dataSource.getAllData().then((data: Array<RocketLaunchInfo>) => {
+            this.center = latLng(data[0].coordinates);
+            data.forEach((element: RocketLaunchInfo) => this.addMarker(element.name, element.coordinates));
         });
     }
 }

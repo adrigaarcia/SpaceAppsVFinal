@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>Próximos lanzamientos</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<table cdk-table [dataSource]="rocketLaunchDataSource">
+    <ng-container cdkColumnDef="dataColumn">
+        <th cdk-header-cell *cdkHeaderCellDef></th>
+        <td cdk-cell *cdkCellDef="let element">
+            <mat-card class="launch-data-container">
+                <mat-card-header>
+                    <mat-card-title>{{element.name}}</mat-card-title>
+                    <mat-card-subtitle>{{element.location}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{element.date.toLocaleDateString()}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions>
+                    <button mat-button (click)="selectedLaunchIdEventEmitter.emit(element.id)">MÁS DETALLES</button>
+                </mat-card-actions>
+            </mat-card>
+        </td>
+    </ng-container>
+
+    <tr cdk-header-row *cdkHeaderRowDef="['dataColumn']"></tr>
+    <tr cdk-row *cdkRowDef="let row; columns: ['dataColumn'];"></tr>
+</table>
+
+<mat-paginator #paginator [pageSizeOptions]="[4, 5, 10]" showFirstLastButtons></mat-paginator>
+
+
